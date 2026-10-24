@@ -905,7 +905,7 @@ Overall, the security level of an agent system depends not only on the model its
 # Acknowledgments {#Acknowledgements}
 {: numbered="false"}
 
-Many thanks to Yasha Khandelwal for his valuable work, review, comments, and suggestions, and in particular for his contribution to the boundary, configuration-disclosure, and logging requirements for memory subsystems defined in this document. Thanks to Patrick Duggan for his review and comments. Thanks to Jiake Chen, Jianyu Lin and Yue yu for their contribution to this draft. 
+Many thanks to Yasha Khandelwal for her valuable work, review, comments, and suggestions, and in particular for his contribution to the boundary, configuration-disclosure, and logging requirements for memory subsystems defined in this document. Thanks to Patrick Duggan for his review and comments. Thanks to Jiake Chen, Jianyu Lin and Yue yu for their contribution to this draft. 
 
 # References
 {: numbered="false"}
