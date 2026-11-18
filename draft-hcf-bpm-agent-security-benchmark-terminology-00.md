@@ -448,6 +448,8 @@ A metric value is meaningful only when the test case set, the pass criteria, and
 - **`Issues`**: Detection may be achieved by content filtering or by instruction isolation, and the mechanism must be stated because the two generalize differently; the metric overlaps with Injection Prevention and Filtering of Search Results (Section 4.6.9) when the injection vector is a search result, and cases MUST be assigned to exactly one metric.
 - **`See also`**: Injection Prevention and Filtering of Search Results (Section 4.6.9), Tool Call Chain Security (Section 4.4.5), Cross-Document Reasoning Security (Section 4.6.10).
 
+Note: Malicious instructions injected specifically through MCP tool metadata (descriptions or parameter schemas) are evaluated under Section 4.6.13. Test cases covering metadata-based injection MUST NOT be duplicated under this section's aggregate score.
+
 ### Multi-Round Strategic Bypass
 
 - **`Definition`**: The capability of an agent to consistently maintain safety boundaries in multi-round, progressive enticement scenarios, without leaking sensitive information or executing high-risk operations.
@@ -751,8 +753,13 @@ A metric value is meaningful only when the test case set, the pass criteria, and
 
 ### MCP Tool Poisoning Defense
 
-- **`Definition`**: The capability of an agent to identify discrepancies between MCP tool declarations and actual execution logic, and to intercept built-in data theft and system operation backdoors.
-- **`Discussion`**: The metric captures whether the declaration of a tool is verified against its behaviour. It is measured by deploying a malicious MCP service with fake functionality and invoking the tool to verify data exfiltration and system command execution behavior.
+- **`Definition`**: The capability of an agent to resist malicious instructions embedded in MCP tool metadata, including tool descriptions and parameter descriptions, and to detect and prevent unauthorized behavior arising from discrepancies between a tool's declared functionality and its actual execution.
+- **`Discussion`**: This metric distinguishes two attack paths. In the first, an adversary places malicious instructions in tool metadata presented to the agent. The tool may correctly perform its advertised function, while the injected instructions attempt to redirect the agent's task, induce unauthorized access, or cause misuse of other tools. Such attacks may take effect when the agent reads the tool definition, before the poisoned tool is invoked. In the second, a tool's implementation performs unauthorized operations concealed by or inconsistent with its declared functionality, such as data exfiltration or unauthorized system-command execution.
+
+Evaluation SHOULD cover both paths where applicable and report their results separately. For metadata-based injection, the security objective is to prevent the injected instructions from causing behavior that violates the authorized task or applicable security policy. Merely detecting or logging the instructions does not establish successful prevention. Tool descriptions and parameter descriptions do not, by themselves, grant authorization for additional actions.
+
+Metadata-based injection is a specific form of indirect injection related to Section 4.4.2. Malicious instructions delivered in tool execution results are related to Section 4.6.16. The evaluation report MUST state how overlapping test cases are assigned to metrics so that the same case is not counted more than once in an aggregate score.
+
 - **`Metric of measurement`**: The pass rate over the MCP tool poisoning test case set, computed as described in Section 4.2.
 - **`Applicable boundary`**: Basic Security.
 - **`Issues`**: Verification of behavior against declaration generally requires either a trusted registry or runtime inspection, and the mechanism present MUST be reported; the metric overlaps with Tool Call Chain Security (Section 4.4.5) once a compromised tool output propagates downstream.
@@ -784,6 +791,7 @@ A metric value is meaningful only when the test case set, the pass criteria, and
 - **`Applicable boundary`**: Basic Security.
 - **`Issues`**: Schema validation does not detect injection and instruction filtering does not detect malformed data, so a combined pass rate without the split is not interpretable; the API contract source is part of the configuration and must be reported.
 - **`See also`**: Tool Call Chain Security (Section 4.4.5), Indirect Injection Defense (Section 4.4.2), MCP Tool Poisoning Defense (Section 4.6.13).
+Note: Malicious instructions delivered via tool execution results are distinct from those embedded in tool metadata (Section 4.6.13). The evaluation report MUST clearly assign each test case to one of these metrics to avoid double-counting.
 
 ### Identity and Access Credential Security
 
